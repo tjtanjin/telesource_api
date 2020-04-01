@@ -19,8 +19,12 @@ router.post('/', async (req, res) => {
       console.error(`exec error: ${error}`);
       return;
     }
-    split = stdout.split("\n")
-    result = split[split.length-2]
+    const split = stdout.split("\n")
+    if (split[1].includes("> Error:")) {
+      result = split[split.length-3].slice(2)
+    } else {
+      result = split[split.length-2]
+    }
     if (split.length < 4) {
       result = result.slice(2)
     }
