@@ -11,8 +11,9 @@ router.get('/', (req, res) => {
 // execute code and return result
 router.post('/', async (req, res) => {
   let result = ""
-  const userid = req.body.userid
-  const command = "jq -r '.code_snippet' ../telesourcebot/userinfo/" + userid + ".json" + ' | node js-slang/dist/repl/repl.js 4'
+  const userid = req.body.userid;
+  const sourceVersion = req.body.version;
+  const command = "jq -r '.code_snippet' ../telesourcebot/userinfo/" + userid + ".json" + ' | node js-slang/dist/repl/repl.js ' + sourceVersion
   const { exec } = require('child_process');
   exec(command, (error, stdout, stderr) => {
     if (error) {
