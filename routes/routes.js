@@ -21,8 +21,8 @@ router.post('/', async (req, res) => {
       return;
     }
     const split = stdout.split("\n");
-    if (split[1].includes("> Error:")) {
-      result = split[split.length-3].slice(2)
+    if (split[1].includes("> Thrown:")) {
+      result = split[split.length-4].slice(7)
     } else {
       result = split[split.length-2]
     }
@@ -30,6 +30,7 @@ router.post('/', async (req, res) => {
       result = result.slice(2)
     }
     //console.error(`stderr: ${stderr}`);
+    result = result.replace(/\u001b\[.*?m/g, '')
     res.status(201).json(result)
   });
 })
